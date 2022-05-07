@@ -1,7 +1,14 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
+
+def apiCredentialsFile = rootProject.file("apicredentials.properties")
+def apiCredentialsProperties = new Properties()
+apiCredentialsProperties.load(new FileInputStream(apiCredentialsFile))
+
 
 android {
     compileSdk 31
@@ -17,6 +24,7 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
+        buildConfigField("String","APIKEY",apiCredentialsProperties['key'])
     }
 
     buildTypes {
@@ -46,6 +54,25 @@ android {
 }
 
 dependencies {
+    //hilt
+    implementation 'com.google.dagger:hilt-android:2.40.5'
+    kapt 'com.google.dagger:hilt-android-compiler:2.38.1'
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+
+    //retrofit
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation("com.squareup.retrofit2:adapter-rxjava3:2.9.0")
+
+    //moshi
+    implementation("com.squareup.moshi:moshi:1.13.0")
+    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
+    kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.13.0'
+
+    //coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-rx3:1.5.2")
+
+    //compose navigation
+    implementation("androidx.navigation:navigation-compose:2.4.2")
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation "androidx.compose.ui:ui:$compose_version"
