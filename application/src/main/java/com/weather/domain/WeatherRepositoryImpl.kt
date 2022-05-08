@@ -1,23 +1,22 @@
-package com.weatherappcomposedemo.domain
+package com.weather.domain
 
-import com.weatherappcomposedemo.network.NetworkConfiguration
-import com.weatherappcomposedemo.network.WeatherApi
-import com.weatherappcomposedemo.network.model.CurrentWeatherResponse
-import io.reactivex.rxjava3.core.Single
+import com.weather.network.CurrentWeatherResponse
+import com.weather.network.NetworkConfiguration
+import com.weather.network.WeatherApi
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 internal class WeatherRepositoryImpl @Inject constructor(
-  private val api: WeatherApi,
-  private val configuration: NetworkConfiguration,
+    private val api: WeatherApi,
+    private val configuration: NetworkConfiguration,
 ) : WeatherRepository {
 
-  override fun downloadCurrentWeather(location: String): Single<CurrentWeatherResponse> =
-    api
-      .currentWeather(
-        city = location,
-        key = configuration.apiKey(),
-        units = "metric")
-
+    override suspend fun downloadCurrentWeather(location: String): CurrentWeatherResponse =
+        api
+            .currentWeather(
+                city = location,
+                key = configuration.apiKey(),
+                units = "metric"
+            )
 }

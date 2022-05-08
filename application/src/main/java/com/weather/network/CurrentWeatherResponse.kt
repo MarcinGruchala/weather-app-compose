@@ -1,4 +1,4 @@
-package com.weatherappcomposedemo.network.model
+package com.weather.network
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

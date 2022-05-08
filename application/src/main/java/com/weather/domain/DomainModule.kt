@@ -1,4 +1,4 @@
-package com.weatherappcomposedemo.domain
+package com.weather.domain
 
 import dagger.Binds
 import dagger.Module
@@ -11,5 +11,6 @@ abstract class DomainModule {
 
   @[Binds Singleton]
   internal abstract fun weatherRepository(
-    implementation: WeatherRepositoryImpl): WeatherRepository
+    implementation: WeatherRepositoryImpl
+  ): WeatherRepository
 }

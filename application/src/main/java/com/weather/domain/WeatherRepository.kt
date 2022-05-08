@@ -1,9 +1,8 @@
-package com.weatherappcomposedemo.domain
+package com.weather.domain
 
-import com.weatherappcomposedemo.network.model.CurrentWeatherResponse
-import io.reactivex.rxjava3.core.Single
+import com.weather.network.CurrentWeatherResponse
 
 interface WeatherRepository {
 
-  fun downloadCurrentWeather(location: String): Single<CurrentWeatherResponse>
+    suspend fun downloadCurrentWeather(location: String): CurrentWeatherResponse
 }

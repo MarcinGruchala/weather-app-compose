@@ -1,4 +1,4 @@
-package com.weatherappcomposedemo.network
+package com.weather.network
 
 import com.weather.BuildConfig
 import dagger.Reusable

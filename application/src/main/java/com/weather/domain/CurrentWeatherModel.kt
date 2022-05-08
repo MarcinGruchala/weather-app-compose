@@ -1,4 +1,4 @@
-package com.weatherappcomposedemo.domain.model
+package com.weather.domain
 
 data class CurrentWeather(
   val coord: Coord,
