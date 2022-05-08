@@ -1,12 +1,7 @@
 package com.weather.presentation.weather
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
@@ -19,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.weather.presentation.weather.WeatherViewModel.WeatherState
@@ -36,35 +32,12 @@ fun WeatherScreen(
     horizontalAlignment = Alignment.CenterHorizontally,
     verticalArrangement = Arrangement.SpaceBetween
   ) {
-    WeatherData(state = state)
+    WeatherHeader(state = state)
     BottomBar(
       navHostController = navHostController,
       lastUpdate = "15:00"
     )
   }
-}
-
-@Composable
-fun WeatherData(
-  state: State<WeatherState>
-) {
-  Column(
-    horizontalAlignment = Alignment.CenterHorizontally,
-    modifier = Modifier.padding(top = 10.dp)
-  ) {
-    LocationName(location = state.value.location)
-    LocalTemp(temp = state.value.temp)
-  }
-}
-
-@Composable
-fun LocationName(location: String) {
-  Text(text = location)
-}
-
-@Composable
-fun LocalTemp(temp: Int) {
-  Text(text = "$temp °C", modifier = Modifier.padding(top = 10.dp))
 }
 
 @Composable
@@ -91,7 +64,7 @@ fun BottomBar(
 @Composable
 fun WeatherDetailsScreenPreview() {
 
-  val mockState = mutableStateOf(WeatherState("Wrocław", 4))
+  val mockState = mutableStateOf(WeatherState("Wrocław", 33))
   WeatherTheme {
     WeatherScreen(
       navHostController = rememberNavController(),
