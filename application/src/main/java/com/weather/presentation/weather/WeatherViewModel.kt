@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.weather.R
 import com.weather.domain.WeatherRepository
+import com.weather.presentation.weather.daily.DailyForecastModel
 import com.weather.presentation.weather.hourly.HourlyForecastModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,28 +24,24 @@ class WeatherViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
+            val mockHourlyItem = HourlyForecastModel("15 PM", R.drawable.clear_sky_day, "1")
+            val hourlyForecastMock = List(24) {mockHourlyItem}
 
-            val list = listOf(
-                HourlyForecastModel("15 PM", R.drawable.clear_sky_day, "1"),
-                HourlyForecastModel("15 PM", R.drawable.clear_sky_day, "2"),
-                HourlyForecastModel("15 PM", R.drawable.clear_sky_day, "3"),
-                HourlyForecastModel("15 PM", R.drawable.clear_sky_day, "4"),
-                HourlyForecastModel("15 PM", R.drawable.clear_sky_day, "5"),
-                HourlyForecastModel("15 PM", R.drawable.clear_sky_day, "6"),
-                HourlyForecastModel("15 PM", R.drawable.clear_sky_day, "14"),
-                HourlyForecastModel("15 PM", R.drawable.clear_sky_day, "15"),
-                HourlyForecastModel("15 PM", R.drawable.clear_sky_day, "44"),
-                HourlyForecastModel("15 PM", R.drawable.clear_sky_day, "22"),
-                HourlyForecastModel("15 PM", R.drawable.clear_sky_day, "23"),
-                HourlyForecastModel("15 PM", R.drawable.clear_sky_day, "22")
+            val dailyForecastItemMock = DailyForecastModel(
+                day = "Monday",
+                icon = R.drawable.rain_day,
+                tempMax = 22,
+                tempMin = 13
             )
+            val dailyForecastMock = List(7) { dailyForecastItemMock }
 
             repository
                 .downloadCurrentWeather("Wrocław")
                 .also {
                     _state.value = WeatherState(
                         location = it.name,
-                        hourlyForecast = list,
+                        hourlyForecast = hourlyForecastMock,
+                        dailyForecast = dailyForecastMock,
                         temp = it.main.temp.toInt()
                     )
                 }
@@ -54,7 +51,8 @@ class WeatherViewModel @Inject constructor(
     data class WeatherState(
         val location: String = "",
         val temp: Int = 0,
-        val hourlyForecast: List<HourlyForecastModel> = emptyList()
+        val hourlyForecast: List<HourlyForecastModel> = emptyList(),
+        val dailyForecast: List<DailyForecastModel> = emptyList()
     ) {
         companion object {
             fun empty(): WeatherState =

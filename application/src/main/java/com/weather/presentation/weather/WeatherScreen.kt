@@ -19,6 +19,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.weather.R
 import com.weather.presentation.weather.WeatherViewModel.WeatherState
+import com.weather.presentation.weather.daily.DailyForecast
+import com.weather.presentation.weather.daily.DailyForecastModel
 import com.weather.presentation.weather.hourly.HourlyForecast
 import com.weather.presentation.weather.hourly.HourlyForecastModel
 import com.weather.ui.theme.Malibu
@@ -42,6 +44,7 @@ fun WeatherScreen(
         ) {
             WeatherHeader(state = state)
             HourlyForecast(hourlyForecast = state.value.hourlyForecast)
+            DailyForecast(dailyForecast = state.value.dailyForecast)
         }
 
         BottomBar(
@@ -75,22 +78,24 @@ fun BottomBar(
 @Composable
 fun WeatherDetailsScreenPreview() {
 
-    val list = listOf(
-        HourlyForecastModel("15 PM", R.drawable.clear_sky_day, "1"),
-        HourlyForecastModel("15 PM", R.drawable.clear_sky_day, "2"),
-        HourlyForecastModel("15 PM", R.drawable.clear_sky_day, "3"),
-        HourlyForecastModel("15 PM", R.drawable.clear_sky_day, "4"),
-        HourlyForecastModel("15 PM", R.drawable.clear_sky_day, "5"),
-        HourlyForecastModel("15 PM", R.drawable.clear_sky_day, "6"),
-        HourlyForecastModel("15 PM", R.drawable.clear_sky_day, "14"),
-        HourlyForecastModel("15 PM", R.drawable.clear_sky_day, "15"),
-        HourlyForecastModel("15 PM", R.drawable.clear_sky_day, "44"),
-        HourlyForecastModel("15 PM", R.drawable.clear_sky_day, "22"),
-        HourlyForecastModel("15 PM", R.drawable.clear_sky_day, "23"),
-        HourlyForecastModel("15 PM", R.drawable.clear_sky_day, "22")
-    )
+    val mockHourlyItem = HourlyForecastModel("15 PM", R.drawable.clear_sky_day, "1")
+    val hourlyForecastMock = List(24) {mockHourlyItem}
 
-    val mockState = mutableStateOf(WeatherState("Wrocław", 33, list))
+    val dailyForecastItemMock = DailyForecastModel(
+        day = "Monday",
+        icon = R.drawable.rain_day,
+        tempMax = 22,
+        tempMin = 13
+    )
+    val dailyForecastMock = List(7) { dailyForecastItemMock }
+    val mockState = mutableStateOf(
+        WeatherState(
+            "Wrocław",
+            33,
+            hourlyForecastMock,
+            dailyForecastMock
+        )
+    )
     WeatherTheme {
         WeatherScreen(
             navHostController = rememberNavController(),
