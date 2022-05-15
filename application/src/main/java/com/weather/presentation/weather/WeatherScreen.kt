@@ -2,11 +2,10 @@ package com.weather.presentation.weather
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
@@ -19,71 +18,64 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.weather.R
 import com.weather.presentation.weather.WeatherViewModel.WeatherState
+import com.weather.presentation.weather.daily.DailyForecast
+import com.weather.presentation.weather.daily.DailyForecastModel
+import com.weather.presentation.weather.grid.GridForecast
+import com.weather.presentation.weather.grid.GridForecastModel
+import com.weather.presentation.weather.hourly.HourlyForecast
+import com.weather.presentation.weather.hourly.HourlyForecastModel
 import com.weather.ui.theme.WeatherTheme
 
 @Composable
 fun WeatherScreen(
-  navHostController: NavHostController,
-  state: State<WeatherState>
+    navHostController: NavHostController,
+    state: State<WeatherState>
 ) {
-  val modifier = Modifier
-    .fillMaxSize()
-  Column(
-    modifier = modifier,
-    horizontalAlignment = Alignment.CenterHorizontally,
-    verticalArrangement = Arrangement.SpaceBetween
-  ) {
-    WeatherData(state = state)
-    BottomBar(
-      navHostController = navHostController,
-      lastUpdate = "15:00"
-    )
-  }
-}
+    ConstraintLayout(
+        modifier = Modifier.fillMaxSize().padding(horizontal = 6.dp)
+    ) {
+        val (forecast, bottomBar) = createRefs()
+        LazyColumn(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .constrainAs(forecast) {
+                    top.linkTo(parent.top, margin = 10.dp)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    bottom.linkTo(bottomBar.top, margin = 6.dp)
+                    height = Dimension.fillToConstraints
+                    width = Dimension.fillToConstraints
+                }
+        ) {
+            item { WeatherHeader(state = state) }
+            item { HourlyForecast(hourlyForecast = state.value.hourlyForecast) }
+            item { DailyForecast(dailyForecast = state.value.dailyForecast) }
+            item { GridForecast(model = state.value.gridForecastModel) }
+        }
 
-@Composable
-fun WeatherData(
-  state: State<WeatherState>
-) {
-  Column(
-    horizontalAlignment = Alignment.CenterHorizontally,
-    modifier = Modifier.padding(top = 10.dp)
-  ) {
-    LocationName(location = state.value.location)
-    LocalTemp(temp = state.value.temp)
-  }
-}
-
-@Composable
-fun LocationName(location: String) {
-  Text(text = location)
-}
-
-@Composable
-fun LocalTemp(temp: Int) {
-  Text(text = "$temp °C", modifier = Modifier.padding(top = 10.dp))
-}
-
-@Composable
-fun BottomBar(
-  navHostController: NavHostController,
-  lastUpdate: String
-) {
-  Row(
-    modifier = Modifier
-      .padding(horizontal = 10.dp)
-      .fillMaxWidth(),
-    horizontalArrangement = Arrangement.SpaceBetween,
-    verticalAlignment = Alignment.CenterVertically
-  ) {
-    Text(text = "Last update: $lastUpdate")
-    IconButton(onClick = { navHostController.navigate(route = "locations") }) {
-      Icon(Icons.Filled.List, contentDescription = "Localized description")
+        Row(
+            modifier = Modifier.constrainAs(bottomBar) {
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+                bottom.linkTo(parent.bottom)
+                height = Dimension.wrapContent
+                width = Dimension.fillToConstraints
+            },
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(text = "Last update: 15:00")
+            IconButton(onClick = { navHostController.navigate(route = "locations") }) {
+                Icon(Icons.Filled.List, contentDescription = "Localized description")
+            }
+        }
     }
-  }
 }
 
 @SuppressLint("UnrememberedMutableState")
@@ -91,19 +83,39 @@ fun BottomBar(
 @Composable
 fun WeatherDetailsScreenPreview() {
 
-  val mockState = mutableStateOf(WeatherState("Wrocław", 4))
-  WeatherTheme {
-    WeatherScreen(
-      navHostController = rememberNavController(),
-      mockState
-    )
-  }
-}
+    val mockHourlyItem = HourlyForecastModel("15 PM", R.drawable.clear_sky_day, "1")
+    val hourlyForecastMock = List(24) { mockHourlyItem }
 
-@Preview(showBackground = true, backgroundColor = 0xFF669FFF)
-@Composable
-fun BottomBarPreview() {
-  WeatherTheme {
-    BottomBar(lastUpdate = "15:00", navHostController = rememberNavController())
-  }
+    val dailyForecastItemMock = DailyForecastModel(
+        day = "Monday",
+        icon = R.drawable.rain_day,
+        tempMax = 22,
+        tempMin = 13
+    )
+    val dailyForecastMock = List(7) { dailyForecastItemMock }
+
+    val mockGridForecast = GridForecastModel(
+        windDeg = 45,
+        windSpeed = 9,
+        sunRise = "6:59",
+        sunSet = "20:45",
+        pressure = 1024,
+        humidity = 10
+    )
+
+    val mockState = mutableStateOf(
+        WeatherState(
+            "Wrocław",
+            33,
+            hourlyForecastMock,
+            dailyForecastMock,
+            mockGridForecast
+        )
+    )
+    WeatherTheme {
+        WeatherScreen(
+            navHostController = rememberNavController(),
+            mockState
+        )
+    }
 }
