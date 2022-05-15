@@ -23,12 +23,11 @@ fun DailyForecast(dailyForecast: List<DailyForecastModel>) {
         elevation = 4.dp,
         backgroundColor = DarkBlue
     ) {
-        LazyColumn(
-            contentPadding = PaddingValues(horizontal = 8.dp),
+        Column(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            items(dailyForecast) { item ->
-                DailyForecastItem(model = item)
+            dailyForecast.forEach {
+                DailyForecastItem(model = it)
             }
         }
     }
