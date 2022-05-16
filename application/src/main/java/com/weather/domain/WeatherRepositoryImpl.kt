@@ -1,6 +1,6 @@
 package com.weather.domain
 
-import com.weather.network.CurrentWeatherResponse
+import com.weather.network.model.CurrentWeatherResponse
 import com.weather.network.NetworkConfiguration
 import com.weather.network.WeatherApi
 import javax.inject.Inject

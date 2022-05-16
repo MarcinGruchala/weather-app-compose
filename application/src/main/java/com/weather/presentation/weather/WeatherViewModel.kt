@@ -53,7 +53,7 @@ class WeatherViewModel @Inject constructor(
                         hourlyForecast = hourlyForecastMock,
                         dailyForecast = dailyForecastMock,
                         gridForecastModel = mockGridForecast,
-                        temp = it.main.temp.toInt()
+                        temp = it.mainForecast.temp.toInt()
                     )
                 }
         }
