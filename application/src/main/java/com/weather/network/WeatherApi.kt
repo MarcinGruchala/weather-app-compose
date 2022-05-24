@@ -1,6 +1,7 @@
 package com.weather.network
 
-import com.weather.network.model.CurrentWeatherResponse
+import com.weather.network.model.current.CurrentWeatherResponse
+import com.weather.network.model.onecall.OneCallResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -12,4 +13,13 @@ interface WeatherApi {
         @Query("appid") key: String,
         @Query("units") units: String
     ): CurrentWeatherResponse
+
+    @GET("onecall")
+    suspend fun futureForecast(
+        @Query("lat") lat: Double,
+        @Query("lon") lon: Double,
+        @Query("appid") key: String,
+        @Query("exclude") exclude: String,
+        @Query("units") units: String
+    ): OneCallResponse
 }

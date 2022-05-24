@@ -11,6 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -55,6 +56,12 @@ class WeatherViewModel @Inject constructor(
                         gridForecastModel = mockGridForecast,
                         temp = it.mainForecast.temp.toInt()
                     )
+                }
+
+            repository
+                .fetchWeatherForecast("Wrocław")
+                .also {
+                    Timber.d("Forecast: ${it.futureForecast}")
                 }
         }
     }

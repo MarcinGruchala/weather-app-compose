@@ -1,7 +1,8 @@
-package com.weather.network.model
+package com.weather.network.model.current
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.weather.network.model.common.WeatherDto
 
 @JsonClass(generateAdapter = true)
 data class CurrentWeatherResponse(
