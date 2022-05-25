@@ -13,7 +13,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.weather.R
-import com.weather.ui.theme.DarkBlue
+import com.weather.ui.theme.SkyBlue35
 import com.weather.ui.theme.WeatherTheme
 
 @Composable
@@ -21,7 +21,7 @@ fun DailyForecast(dailyForecast: List<DailyForecastModel>) {
     Card(
         modifier = Modifier.padding(6.dp),
         elevation = 4.dp,
-        backgroundColor = DarkBlue
+        backgroundColor = SkyBlue35
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp)

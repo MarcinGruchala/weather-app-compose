@@ -17,7 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.weather.R
-import com.weather.ui.theme.DarkBlue
+import com.weather.ui.theme.SkyBlue35
 import com.weather.ui.theme.WeatherTheme
 
 @Composable
@@ -25,7 +25,7 @@ fun HourlyForecast(hourlyForecast: List<HourlyForecastModel>) {
     Card(
         modifier = Modifier.padding(6.dp),
         elevation = 4.dp,
-        backgroundColor = DarkBlue
+        backgroundColor = SkyBlue35
     ) {
         LazyRow(
             contentPadding = PaddingValues(horizontal = 8.dp),

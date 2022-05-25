@@ -1,6 +1,7 @@
 package com.weather.presentation.weather
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.List
@@ -40,6 +42,7 @@ fun WeatherScreen(
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 6.dp)
+            .background(MaterialTheme.colors.background)
     ) {
         val (forecast, bottomBar) = createRefs()
         LazyColumn(
@@ -71,9 +74,15 @@ fun WeatherScreen(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = "Last update: ${state.value.lastUpdate}")
+            Text(
+                color = MaterialTheme.colors.onPrimary,
+                text = "Last update: ${state.value.lastUpdate}"
+            )
             IconButton(onClick = { navHostController.navigate(route = "locations") }) {
-                Icon(Icons.Filled.List, contentDescription = "Localized description")
+                Icon(
+                    imageVector = Icons.Filled.List,
+                    tint = MaterialTheme.colors.onPrimary,
+                    contentDescription = "Localized description")
             }
         }
     }

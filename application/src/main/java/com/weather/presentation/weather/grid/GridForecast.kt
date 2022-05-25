@@ -8,7 +8,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.weather.ui.theme.DarkBlue
+import com.weather.ui.theme.SkyBlue35
 
 @Composable
 fun GridForecast(model: GridForecastModel) {
@@ -38,7 +38,7 @@ fun WindItem(model: GridForecastModel) {
             .padding(6.dp)
             .size(150.dp),
         elevation = 4.dp,
-        backgroundColor = DarkBlue
+        backgroundColor = SkyBlue35
     ) {
         Column(
             verticalArrangement = Arrangement.SpaceEvenly,
@@ -59,7 +59,7 @@ fun SunItem(model: GridForecastModel) {
             .padding(6.dp)
             .size(150.dp),
         elevation = 4.dp,
-        backgroundColor = DarkBlue
+        backgroundColor = SkyBlue35
     ) {
         Column(
             verticalArrangement = Arrangement.SpaceEvenly,
@@ -80,7 +80,7 @@ fun PressureItem(model: GridForecastModel) {
             .padding(6.dp)
             .size(150.dp),
         elevation = 4.dp,
-        backgroundColor = DarkBlue
+        backgroundColor = SkyBlue35
     ) {
         Column(
             verticalArrangement = Arrangement.SpaceEvenly,
@@ -99,7 +99,7 @@ fun HumidityItem(model: GridForecastModel) {
             .padding(6.dp)
             .size(150.dp),
         elevation = 4.dp,
-        backgroundColor = DarkBlue
+        backgroundColor = SkyBlue35
     ) {
         Column(
             verticalArrangement = Arrangement.SpaceEvenly,
