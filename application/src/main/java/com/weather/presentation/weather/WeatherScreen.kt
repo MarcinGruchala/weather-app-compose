@@ -1,6 +1,7 @@
 package com.weather.presentation.weather
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -30,6 +31,7 @@ import com.weather.presentation.weather.grid.GridForecast
 import com.weather.presentation.weather.grid.GridForecastModel
 import com.weather.presentation.weather.hourly.HourlyForecast
 import com.weather.presentation.weather.hourly.HourlyForecastModel
+import com.weather.ui.theme.Malibu
 import com.weather.ui.theme.WeatherTheme
 
 @Composable
@@ -107,6 +109,7 @@ fun WeatherDetailsScreenPreview() {
         WeatherState(
             "Wrocław",
             33,
+             "Clear Sky",
             hourlyForecastMock,
             dailyForecastMock,
             mockGridForecast

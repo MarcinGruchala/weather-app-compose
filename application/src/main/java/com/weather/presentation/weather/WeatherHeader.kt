@@ -24,7 +24,7 @@ fun WeatherHeader(
     ) {
         LocationName(location = state.value.location)
         LocalTemp(temp = state.value.temp)
-        WeatherDescription(description = "Sunny")
+        WeatherDescription(description = state.value.description)
     }
 }
 
@@ -42,7 +42,8 @@ fun LocalTemp(temp: Int) {
         text = "$temp °C",
         fontSize = 30.sp,
         modifier = Modifier
-            .padding(top = 10.dp))
+            .padding(top = 10.dp)
+    )
 }
 
 @Composable
@@ -58,7 +59,13 @@ fun WeatherDescription(description: String) {
 @Composable
 fun WeatherHeaderPreview() {
 
-    val mockState = mutableStateOf(WeatherViewModel.WeatherState("Wrocław", 33))
+    val mockState = mutableStateOf(
+        WeatherViewModel.WeatherState(
+            location = "Wrocław",
+            temp = 33,
+            description = "Sunny"
+        )
+    )
     WeatherTheme {
         WeatherHeader(
             mockState
