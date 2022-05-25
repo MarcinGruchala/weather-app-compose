@@ -2,10 +2,10 @@ package com.weather.presentation.weather
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.weather.R
 import com.weather.domain.WeatherRepository
-import com.weather.presentation.weather.daily.DailyListFactory
+import com.weather.presentation.utils.DateTimeFormatter
 import com.weather.presentation.weather.daily.DailyForecastModel
+import com.weather.presentation.weather.daily.DailyListFactory
 import com.weather.presentation.weather.grid.GridForecastModel
 import com.weather.presentation.weather.hourly.HourlyForecastFactory
 import com.weather.presentation.weather.hourly.HourlyForecastModel
@@ -19,7 +19,8 @@ import javax.inject.Inject
 class WeatherViewModel @Inject constructor(
     repository: WeatherRepository,
     hourlyListFactory: HourlyForecastFactory,
-    dailyListFactory: DailyListFactory
+    dailyListFactory: DailyListFactory,
+    timeFormatter: DateTimeFormatter
 ) : ViewModel() {
 
     private val _state: MutableStateFlow<WeatherState> =
@@ -29,15 +30,6 @@ class WeatherViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val mockGridForecast = GridForecastModel(
-                windDeg = 45,
-                windSpeed = 9,
-                sunRise = "6:59",
-                sunSet = "20:45",
-                pressure = 1024,
-                humidity = 10
-            )
-
             repository
                 .fetchWeatherForecast("Wrocław")
                 .also { weatherForecast ->
@@ -57,7 +49,20 @@ class WeatherViewModel @Inject constructor(
                         dailyForecast = dailyListFactory.createDailyList(
                             list = weatherForecast.futureForecast.daily
                         ),
-                        gridForecastModel = mockGridForecast
+                        gridForecastModel = GridForecastModel(
+                            windSpeed = weatherForecast.currentWeather.wind.speed.toInt(),
+                            windDeg = weatherForecast.currentWeather.wind.deg,
+                            sunRise = timeFormatter.getFullHour(
+                                weatherForecast.currentWeather.sys.sunrise
+                            ),
+                            sunSet = timeFormatter.getFullHour(
+                                weatherForecast.currentWeather.sys.sunset
+                            ),
+                            pressure = weatherForecast.currentWeather.mainForecast.pressure,
+                            humidity = weatherForecast.currentWeather.mainForecast.humidity
+                        ),
+                        lastUpdate = timeFormatter
+                            .getFullHour(weatherForecast.currentWeather.dayTime)
                     )
                 }
         }
@@ -69,7 +74,8 @@ class WeatherViewModel @Inject constructor(
         val description: String = "",
         val hourlyForecast: List<HourlyForecastModel> = emptyList(),
         val dailyForecast: List<DailyForecastModel> = emptyList(),
-        val gridForecastModel: GridForecastModel = GridForecastModel.empty()
+        val gridForecastModel: GridForecastModel = GridForecastModel.empty(),
+        val lastUpdate: String = ""
     ) {
         companion object {
             fun empty(): WeatherState =

@@ -17,6 +17,17 @@ class DateTimeFormatter @Inject constructor() {
         return dt.toString(format)
     }
 
+    fun getFullHour(dateTime: Int): String {
+        val timeStamp = dateTime * 1000L
+        val dt = DateTime(timeStamp)
+        val format = DateTimeFormatterBuilder()
+            .appendHourOfDay(2)
+            .appendLiteral(":")
+            .appendMinuteOfHour(2)
+            .toFormatter()
+        return dt.toString(format)
+    }
+
     fun getDayOfTheWeek(dateTime: Int): String {
         val timeStamp = dateTime * 1000L
         val dt = DateTime(timeStamp)

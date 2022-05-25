@@ -106,7 +106,7 @@ fun HumidityItem(model: GridForecastModel) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(text = "Humidity:")
-            Text(text = "${model.pressure} %")
+            Text(text = "${model.humidity} %")
         }
     }
 }
