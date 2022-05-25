@@ -23,7 +23,6 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.weather.R
-import com.weather.presentation.weather.WeatherViewModel.WeatherState
 import com.weather.presentation.weather.daily.DailyForecast
 import com.weather.presentation.weather.daily.DailyForecastModel
 import com.weather.presentation.weather.grid.GridForecast
@@ -38,7 +37,9 @@ fun WeatherScreen(
     state: State<WeatherState>
 ) {
     ConstraintLayout(
-        modifier = Modifier.fillMaxSize().padding(horizontal = 6.dp)
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 6.dp)
     ) {
         val (forecast, bottomBar) = createRefs()
         LazyColumn(
@@ -70,7 +71,7 @@ fun WeatherScreen(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = "Last update: 15:00")
+            Text(text = "Last update: ${state.value.lastUpdate}")
             IconButton(onClick = { navHostController.navigate(route = "locations") }) {
                 Icon(Icons.Filled.List, contentDescription = "Localized description")
             }
@@ -105,11 +106,13 @@ fun WeatherDetailsScreenPreview() {
 
     val mockState = mutableStateOf(
         WeatherState(
-            "Wrocław",
-            33,
-            hourlyForecastMock,
-            dailyForecastMock,
-            mockGridForecast
+            location = "Wrocław",
+            temp = 33,
+            description = "Clear Sky",
+            hourlyForecast = hourlyForecastMock,
+            dailyForecast = dailyForecastMock,
+            gridForecastModel = mockGridForecast,
+            lastUpdate = "12:32"
         )
     )
     WeatherTheme {
