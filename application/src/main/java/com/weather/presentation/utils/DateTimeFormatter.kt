@@ -16,4 +16,13 @@ class DateTimeFormatter @Inject constructor() {
             .toFormatter()
         return dt.toString(format)
     }
+
+    fun getDayOfTheWeek(dateTime: Int): String {
+        val timeStamp = dateTime * 1000L
+        val dt = DateTime(timeStamp)
+        val format = DateTimeFormatterBuilder()
+            .appendDayOfWeekText()
+            .toFormatter()
+        return dt.toString(format)
+    }
 }

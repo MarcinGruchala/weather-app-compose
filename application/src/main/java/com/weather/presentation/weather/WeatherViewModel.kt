@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.weather.R
 import com.weather.domain.WeatherRepository
+import com.weather.presentation.weather.daily.DailyListFactory
 import com.weather.presentation.weather.daily.DailyForecastModel
 import com.weather.presentation.weather.grid.GridForecastModel
 import com.weather.presentation.weather.hourly.HourlyForecastFactory
@@ -17,7 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class WeatherViewModel @Inject constructor(
     repository: WeatherRepository,
-    hourlyListFactory: HourlyForecastFactory
+    hourlyListFactory: HourlyForecastFactory,
+    dailyListFactory: DailyListFactory
 ) : ViewModel() {
 
     private val _state: MutableStateFlow<WeatherState> =
@@ -27,15 +29,6 @@ class WeatherViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-
-            val dailyForecastItemMock = DailyForecastModel(
-                day = "Monday",
-                icon = R.drawable.rain_day,
-                tempMax = 22,
-                tempMin = 13
-            )
-            val dailyForecastMock = List(7) { dailyForecastItemMock }
-
             val mockGridForecast = GridForecastModel(
                 windDeg = 45,
                 windSpeed = 9,
@@ -61,7 +54,9 @@ class WeatherViewModel @Inject constructor(
                             .createHourlyList(
                                 list = weatherForecast.futureForecast.hourly
                             ),
-                        dailyForecast = dailyForecastMock,
+                        dailyForecast = dailyListFactory.createDailyList(
+                            list = weatherForecast.futureForecast.daily
+                        ),
                         gridForecastModel = mockGridForecast
                     )
                 }
