@@ -8,7 +8,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class HourlyForecastFactory @Inject constructor(
+class HourlyListFactory @Inject constructor(
     private val dateTimeFormatter: DateTimeFormatter,
     private val iconFactory: IconFactory
 ) {

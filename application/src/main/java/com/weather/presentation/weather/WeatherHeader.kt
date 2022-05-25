@@ -16,7 +16,7 @@ import com.weather.ui.theme.WeatherTheme
 
 @Composable
 fun WeatherHeader(
-    state: State<WeatherViewModel.WeatherState>
+    state: State<WeatherState>
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -60,7 +60,7 @@ fun WeatherDescription(description: String) {
 fun WeatherHeaderPreview() {
 
     val mockState = mutableStateOf(
-        WeatherViewModel.WeatherState(
+        WeatherState(
             location = "Wrocław",
             temp = 33,
             description = "Sunny"

@@ -1,7 +1,6 @@
 package com.weather.presentation.weather
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,14 +23,12 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.weather.R
-import com.weather.presentation.weather.WeatherViewModel.WeatherState
 import com.weather.presentation.weather.daily.DailyForecast
 import com.weather.presentation.weather.daily.DailyForecastModel
 import com.weather.presentation.weather.grid.GridForecast
 import com.weather.presentation.weather.grid.GridForecastModel
 import com.weather.presentation.weather.hourly.HourlyForecast
 import com.weather.presentation.weather.hourly.HourlyForecastModel
-import com.weather.ui.theme.Malibu
 import com.weather.ui.theme.WeatherTheme
 
 @Composable
