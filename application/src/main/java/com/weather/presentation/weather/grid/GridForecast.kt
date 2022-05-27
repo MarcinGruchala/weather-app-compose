@@ -9,34 +9,46 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.weather.ui.theme.SkyBlue35
+import com.weather.ui.theme.WeatherTheme
+
 
 @Composable
 fun GridForecast(model: GridForecastModel) {
+    val rowHorizontalArrangement = Arrangement.SpaceBetween
+
     Column(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 10.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Row(
-            horizontalArrangement = Arrangement.SpaceEvenly
+            horizontalArrangement = rowHorizontalArrangement,
+            modifier = Modifier.fillMaxWidth()
         ) {
             WindItem(model = model)
+            Spacer(modifier = Modifier.width(8.dp))
             SunItem(model = model)
         }
         Row(
-            horizontalArrangement = Arrangement.SpaceEvenly
+            horizontalArrangement = rowHorizontalArrangement,
+            modifier = Modifier.fillMaxWidth()
         ) {
             PressureItem(model = model)
+            Spacer(modifier = Modifier.width(8.dp))
             HumidityItem(model = model)
         }
     }
 }
 
+val cardModifier = Modifier
+    .padding(vertical = 6.dp)
+    .size(180.dp)
+
 @Composable
 fun WindItem(model: GridForecastModel) {
     Card(
-        modifier = Modifier
-            .padding(6.dp)
-            .size(150.dp),
+        modifier = cardModifier,
         elevation = 4.dp,
         backgroundColor = SkyBlue35
     ) {
@@ -55,9 +67,7 @@ fun WindItem(model: GridForecastModel) {
 @Composable
 fun SunItem(model: GridForecastModel) {
     Card(
-        modifier = Modifier
-            .padding(6.dp)
-            .size(150.dp),
+        modifier = cardModifier,
         elevation = 4.dp,
         backgroundColor = SkyBlue35
     ) {
@@ -76,9 +86,7 @@ fun SunItem(model: GridForecastModel) {
 @Composable
 fun PressureItem(model: GridForecastModel) {
     Card(
-        modifier = Modifier
-            .padding(6.dp)
-            .size(150.dp),
+        modifier = cardModifier,
         elevation = 4.dp,
         backgroundColor = SkyBlue35
     ) {
@@ -95,9 +103,7 @@ fun PressureItem(model: GridForecastModel) {
 @Composable
 fun HumidityItem(model: GridForecastModel) {
     Card(
-        modifier = Modifier
-            .padding(6.dp)
-            .size(150.dp),
+        modifier = cardModifier,
         elevation = 4.dp,
         backgroundColor = SkyBlue35
     ) {
@@ -115,6 +121,7 @@ fun HumidityItem(model: GridForecastModel) {
 @Preview(showBackground = true, backgroundColor = 0xFF669FFF)
 @Composable
 fun GridForecastPreview() {
+
     val mockModel = GridForecastModel(
         windDeg = 45,
         windSpeed = 9,
@@ -124,6 +131,8 @@ fun GridForecastPreview() {
         humidity = 10
     )
 
-    GridForecast(model = mockModel)
+    WeatherTheme() {
+        GridForecast(model = mockModel)
+    }
 
 }

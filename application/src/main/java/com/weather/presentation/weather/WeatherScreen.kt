@@ -38,7 +38,7 @@ fun WeatherScreen(
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 6.dp)
+            .padding(horizontal = 10.dp)
             .background(MaterialTheme.colors.background)
     ) {
         val (forecast, bottomBar) = createRefs()
