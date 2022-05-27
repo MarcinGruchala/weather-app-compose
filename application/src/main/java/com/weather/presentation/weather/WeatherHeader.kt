@@ -54,7 +54,9 @@ fun WeatherDescription(description: String) {
     Text(
         color = MaterialTheme.colors.onPrimary,
         text = description,
-        fontSize = 18.sp
+        fontSize = 18.sp,
+        modifier = Modifier
+            .padding(top = 8.dp)
     )
 }
 
