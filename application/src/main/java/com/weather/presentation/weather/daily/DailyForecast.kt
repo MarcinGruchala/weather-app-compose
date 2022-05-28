@@ -2,26 +2,26 @@ package com.weather.presentation.weather.daily
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Card
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.weather.R
-import com.weather.ui.theme.DarkBlue
 import com.weather.ui.theme.WeatherTheme
 
 @Composable
 fun DailyForecast(dailyForecast: List<DailyForecastModel>) {
     Card(
-        modifier = Modifier.padding(6.dp),
+        modifier = Modifier.padding(top = 10.dp),
         elevation = 4.dp,
-        backgroundColor = DarkBlue
+        backgroundColor = MaterialTheme.colors.primaryVariant
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -40,11 +40,31 @@ fun DailyForecastItem(model: DailyForecastModel) {
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
+            .padding(4.dp)
     ) {
-        Text(text = model.day)
-        Image(painter = painterResource(id = model.icon), contentDescription = null)
-        Text(text = "${model.tempMin} °C")
-        Text(text = "${model.tempMax} °C")
+        Text(
+            fontSize = 16.sp,
+            text = model.day,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.weight(1f)
+        )
+        Image(
+            painter = painterResource(id = model.icon),
+            contentDescription = null,
+            modifier = Modifier.weight(1f)
+        )
+        Text(
+            fontSize = 16.sp,
+            text = "${model.tempMin} °C",
+            textAlign = TextAlign.Center,
+            modifier = Modifier.weight(1f)
+        )
+        Text(
+            fontSize = 16.sp,
+            text = "${model.tempMax} °C",
+            textAlign = TextAlign.Center,
+            modifier = Modifier.weight(1f)
+        )
     }
 }
 

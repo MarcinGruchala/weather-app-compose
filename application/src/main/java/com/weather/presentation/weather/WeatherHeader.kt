@@ -3,6 +3,7 @@ package com.weather.presentation.weather
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -32,13 +33,15 @@ fun WeatherHeader(
 fun LocationName(location: String) {
     Text(
         text = location,
-        fontSize = 20.sp
+        fontSize = 20.sp,
+        color = MaterialTheme.colors.onPrimary
     )
 }
 
 @Composable
 fun LocalTemp(temp: Int) {
     Text(
+        color = MaterialTheme.colors.onPrimary,
         text = "$temp °C",
         fontSize = 30.sp,
         modifier = Modifier
@@ -49,8 +52,11 @@ fun LocalTemp(temp: Int) {
 @Composable
 fun WeatherDescription(description: String) {
     Text(
+        color = MaterialTheme.colors.onPrimary,
         text = description,
-        fontSize = 18.sp
+        fontSize = 18.sp,
+        modifier = Modifier
+            .padding(top = 8.dp)
     )
 }
 

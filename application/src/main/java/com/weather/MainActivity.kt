@@ -3,8 +3,13 @@ package com.weather
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -27,7 +32,13 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
 
             WeatherTheme {
-                WeatherAppNavigation(controller = navController)
+                Box(
+                    modifier = Modifier
+                        .background(MaterialTheme.colors.background)
+                        .fillMaxSize()
+                ) {
+                    WeatherAppNavigation(controller = navController)
+                }
             }
         }
     }
@@ -36,7 +47,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun WeatherAppNavigation(controller: NavHostController) {
     NavHost(navController = controller, startDestination = "weather") {
-        composable( route = "weather") { WeatherFragmentScreen(controller) }
+        composable(route = "weather") { WeatherFragmentScreen(controller) }
         composable(route = "locations") { LocationsScreen() }
     }
 }
