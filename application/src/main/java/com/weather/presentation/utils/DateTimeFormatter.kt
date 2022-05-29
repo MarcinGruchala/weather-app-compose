@@ -3,6 +3,7 @@ package com.weather.presentation.utils
 import dagger.Reusable
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormatterBuilder
+import timber.log.Timber
 import javax.inject.Inject
 
 @Reusable

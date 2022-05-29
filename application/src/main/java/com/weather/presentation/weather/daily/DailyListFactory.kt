@@ -16,7 +16,7 @@ class DailyListFactory @Inject constructor(
         list.map {
             DailyForecastModel(
                 day = dateTimeFormatter.getDayOfTheWeek(it.dayTime),
-                icon = iconFactory.createIcon(it.weather.first().icon),
+                icon = iconFactory.getIcon(it.weather.first().icon),
                 tempMin = it.temp.min.toInt(),
                 tempMax = it.temp.max.toInt()
             )
