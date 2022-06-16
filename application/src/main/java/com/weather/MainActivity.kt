@@ -3,23 +3,19 @@ package com.weather
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.weather.presentation.locations.LocationsFragmentScreen
 import com.weather.presentation.locations.LocationsViewModel
 import com.weather.presentation.weather.WeatherScreen
 import com.weather.presentation.weather.WeatherViewModel
 import com.weather.ui.theme.WeatherTheme
-import com.weatherappcomposedemo.presentatnion.locations.LocationsScreen
+import com.weather.presentation.locations.LocationsScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -55,8 +51,3 @@ fun WeatherFragmentScreen(navController: NavHostController) {
     )
 }
 
-@Composable
-fun LocationsFragmentScreen() {
-    val viewModel: LocationsViewModel = hiltViewModel()
-    LocationsScreen()
-}

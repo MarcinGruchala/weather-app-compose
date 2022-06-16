@@ -1,6 +1,6 @@
 package com.weather.presentation.weather.daily
 
-import com.weather.domain.model.onecall.Daily
+import com.weather.domain.weather.model.onecall.Daily
 import com.weather.presentation.utils.DateTimeFormatter
 import com.weather.presentation.utils.IconFactory
 import javax.inject.Inject

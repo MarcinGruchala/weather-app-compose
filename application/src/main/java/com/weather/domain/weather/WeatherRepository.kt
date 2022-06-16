@@ -1,6 +1,6 @@
-package com.weather.domain
+package com.weather.domain.weather
 
-import com.weather.domain.model.common.WeatherForecast
+import com.weather.domain.weather.model.common.WeatherForecast
 import com.weather.network.model.current.CurrentWeatherResponse
 
 interface WeatherRepository {

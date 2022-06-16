@@ -1,6 +1,6 @@
-package com.weather.domain.model.onecall
+package com.weather.domain.weather.model.onecall
 
-import com.weather.domain.model.common.Weather
+import com.weather.domain.weather.model.common.Weather
 import com.weather.network.model.onecall.DailyDto
 
 data class Daily(

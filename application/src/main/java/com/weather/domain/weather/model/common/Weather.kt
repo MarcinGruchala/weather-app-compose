@@ -1,4 +1,4 @@
-package com.weather.domain.model.common
+package com.weather.domain.weather.model.common
 
 import com.weather.network.model.common.WeatherDto
 

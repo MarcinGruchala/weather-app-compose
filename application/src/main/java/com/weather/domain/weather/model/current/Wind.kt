@@ -1,4 +1,4 @@
-package com.weather.domain.model.current
+package com.weather.domain.weather.model.current
 
 import com.weather.network.model.current.WindDto
 

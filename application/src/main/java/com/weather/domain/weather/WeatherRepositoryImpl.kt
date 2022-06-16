@@ -1,8 +1,8 @@
-package com.weather.domain
+package com.weather.domain.weather
 
-import com.weather.domain.model.common.WeatherForecast
-import com.weather.domain.model.current.CurrentWeatherModel
-import com.weather.domain.model.onecall.OneCallModel
+import com.weather.domain.weather.model.common.WeatherForecast
+import com.weather.domain.weather.model.current.CurrentWeatherModel
+import com.weather.domain.weather.model.onecall.OneCallModel
 import com.weather.network.NetworkConfiguration
 import com.weather.network.WeatherApi
 import com.weather.network.model.current.CurrentWeatherResponse

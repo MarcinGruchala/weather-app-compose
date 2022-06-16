@@ -1,5 +1,6 @@
-package com.weatherappcomposedemo.presentatnion.locations
+package com.weather.presentation.locations
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,14 +14,29 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.weather.ui.theme.Onyx
 import com.weather.ui.theme.Orange50
 import com.weather.ui.theme.WeatherTheme
 
 @Composable
-fun LocationsScreen() {
+fun LocationsFragmentScreen() {
+    val viewModel: LocationsViewModel = hiltViewModel()
+    val state = viewModel.state.collectAsState()
+    LocationsScreen(
+        state = state,
+        onSearchClick = { location -> viewModel.onLocationSearchButtonClicked(location) }
+    )
+}
+
+@Composable
+fun LocationsScreen(
+    state: State<LocationsViewModel.LocationsScreenState>,
+    onSearchClick: (String) -> Unit
+) {
     Box(
         modifier = Modifier
             .background(Color.Black)
@@ -31,8 +47,9 @@ fun LocationsScreen() {
                 .fillMaxSize()
                 .padding(10.dp)
         ) {
-            val (locationSearch, searchButton) = createRefs()
+            val (locationSearch, searchButton, currentLocationText) = createRefs()
             var locationText by remember { mutableStateOf("") }
+
             OutlinedTextField(
                 value = locationText,
                 onValueChange = { locationText = it },
@@ -57,7 +74,7 @@ fun LocationsScreen() {
             )
 
             IconButton(
-                onClick = { /*TODO*/ },
+                onClick = { onSearchClick(locationText) },
                 modifier = Modifier
                     .constrainAs(searchButton) {
                         top.linkTo(locationSearch.top)
@@ -74,14 +91,37 @@ fun LocationsScreen() {
                     modifier = Modifier.size(26.dp)
                 )
             }
+
+            Text(
+                text = "Current location: ${state.value.currentLocation}",
+                color = Orange50,
+                fontSize = 20.sp,
+                modifier = Modifier
+                    .constrainAs(currentLocationText) {
+                        top.linkTo(locationSearch.bottom)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                        bottom.linkTo(parent.bottom)
+                    }
+            )
         }
     }
 }
 
+@SuppressLint("UnrememberedMutableState")
 @Preview(showBackground = true, backgroundColor = 0xFF669FFF)
 @Composable
 fun LocationScreenPreview() {
+    val mockState = mutableStateOf(
+        LocationsViewModel.LocationsScreenState(
+            currentLocation = "Wroclaw"
+        )
+    )
+
     WeatherTheme {
-        LocationsScreen()
+        LocationsScreen(
+            state = mockState,
+            onSearchClick = {}
+        )
     }
 }
