@@ -15,6 +15,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.weather.presentation.locations.LocationsViewModel
 import com.weather.presentation.weather.WeatherScreen
 import com.weather.presentation.weather.WeatherViewModel
 import com.weather.ui.theme.WeatherTheme
@@ -28,17 +29,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-
             val navController = rememberNavController()
-
             WeatherTheme {
-                Box(
-                    modifier = Modifier
-                        .background(MaterialTheme.colors.background)
-                        .fillMaxSize()
-                ) {
-                    WeatherAppNavigation(controller = navController)
-                }
+                WeatherAppNavigation(controller = navController)
             }
         }
     }
@@ -48,7 +41,7 @@ class MainActivity : ComponentActivity() {
 fun WeatherAppNavigation(controller: NavHostController) {
     NavHost(navController = controller, startDestination = "weather") {
         composable(route = "weather") { WeatherFragmentScreen(controller) }
-        composable(route = "locations") { LocationsScreen() }
+        composable(route = "locations") { LocationsFragmentScreen() }
     }
 }
 
@@ -60,4 +53,10 @@ fun WeatherFragmentScreen(navController: NavHostController) {
         navHostController = navController,
         state = viewModel.state.collectAsState()
     )
+}
+
+@Composable
+fun LocationsFragmentScreen() {
+    val viewModel: LocationsViewModel = hiltViewModel()
+    LocationsScreen()
 }

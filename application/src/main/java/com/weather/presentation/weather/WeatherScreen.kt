@@ -35,51 +35,57 @@ fun WeatherScreen(
     navHostController: NavHostController,
     state: State<WeatherState>
 ) {
-    ConstraintLayout(
+    Box(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 10.dp)
             .background(MaterialTheme.colors.background)
+            .fillMaxSize()
     ) {
-        val (forecast, bottomBar) = createRefs()
-        LazyColumn(
-            horizontalAlignment = Alignment.CenterHorizontally,
+        ConstraintLayout(
             modifier = Modifier
-                .constrainAs(forecast) {
-                    top.linkTo(parent.top, margin = 10.dp)
+                .fillMaxSize()
+                .padding(horizontal = 10.dp)
+        ) {
+            val (forecast, bottomBar) = createRefs()
+            LazyColumn(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .constrainAs(forecast) {
+                        top.linkTo(parent.top, margin = 10.dp)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                        bottom.linkTo(bottomBar.top, margin = 6.dp)
+                        height = Dimension.fillToConstraints
+                        width = Dimension.fillToConstraints
+                    }
+            ) {
+                item { WeatherHeader(state = state) }
+                item { HourlyForecast(hourlyForecast = state.value.hourlyForecast) }
+                item { DailyForecast(dailyForecast = state.value.dailyForecast) }
+                item { GridForecast(model = state.value.gridForecastModel) }
+            }
+
+            Row(
+                modifier = Modifier.constrainAs(bottomBar) {
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
-                    bottom.linkTo(bottomBar.top, margin = 6.dp)
-                    height = Dimension.fillToConstraints
+                    bottom.linkTo(parent.bottom)
+                    height = Dimension.wrapContent
                     width = Dimension.fillToConstraints
+                },
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    color = MaterialTheme.colors.onPrimary,
+                    text = "Last update: ${state.value.lastUpdate}"
+                )
+                IconButton(onClick = { navHostController.navigate(route = "locations") }) {
+                    Icon(
+                        imageVector = Icons.Filled.List,
+                        tint = MaterialTheme.colors.onPrimary,
+                        contentDescription = "Localized description"
+                    )
                 }
-        ) {
-            item { WeatherHeader(state = state) }
-            item { HourlyForecast(hourlyForecast = state.value.hourlyForecast) }
-            item { DailyForecast(dailyForecast = state.value.dailyForecast) }
-            item { GridForecast(model = state.value.gridForecastModel) }
-        }
-
-        Row(
-            modifier = Modifier.constrainAs(bottomBar) {
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-                bottom.linkTo(parent.bottom)
-                height = Dimension.wrapContent
-                width = Dimension.fillToConstraints
-            },
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                color = MaterialTheme.colors.onPrimary,
-                text = "Last update: ${state.value.lastUpdate}"
-            )
-            IconButton(onClick = { navHostController.navigate(route = "locations") }) {
-                Icon(
-                    imageVector = Icons.Filled.List,
-                    tint = MaterialTheme.colors.onPrimary,
-                    contentDescription = "Localized description")
             }
         }
     }
