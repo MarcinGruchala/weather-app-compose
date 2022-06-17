@@ -11,11 +11,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.weather.presentation.locations.LocationsFragmentScreen
-import com.weather.presentation.locations.LocationsViewModel
 import com.weather.presentation.weather.WeatherScreen
 import com.weather.presentation.weather.WeatherViewModel
 import com.weather.ui.theme.WeatherTheme
-import com.weather.presentation.locations.LocationsScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

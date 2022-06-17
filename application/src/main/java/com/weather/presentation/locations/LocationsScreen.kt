@@ -9,9 +9,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toolingGraphicsLayer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -20,6 +22,7 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.weather.ui.theme.Onyx
 import com.weather.ui.theme.Orange50
+import com.weather.ui.theme.Red35
 import com.weather.ui.theme.WeatherTheme
 
 @Composable
@@ -47,7 +50,12 @@ fun LocationsScreen(
                 .fillMaxSize()
                 .padding(10.dp)
         ) {
-            val (locationSearch, searchButton, currentLocationText) = createRefs()
+            val (
+                locationSearch,
+                searchButton,
+                errorMessage,
+                currentLocationText
+            ) = createRefs()
             var locationText by remember { mutableStateOf("") }
 
             OutlinedTextField(
@@ -64,6 +72,16 @@ fun LocationsScreen(
                     placeholderColor = Orange50,
                     focusedIndicatorColor = Orange50
                 ),
+                isError = state.value.isError,
+                trailingIcon = {
+                    if (state.value.isError) {
+                        Icon(
+                            imageVector = Icons.Default.Warning,
+                            tint = Red35,
+                            contentDescription = ""
+                        )
+                    }
+                },
                 modifier = Modifier
                     .constrainAs(locationSearch) {
                         top.linkTo(parent.top)
@@ -92,6 +110,18 @@ fun LocationsScreen(
                 )
             }
 
+            if (state.value.isError)
+                Text(
+                    text = "Wrong location",
+                    color = Red35,
+                    fontSize = 16.sp,
+                    modifier = Modifier
+                        .constrainAs(errorMessage) {
+                            top.linkTo(locationSearch.bottom, margin = 4.dp)
+                            start.linkTo(parent.start)
+                        }
+                )
+
             Text(
                 text = "Current location: ${state.value.currentLocation}",
                 color = Orange50,
@@ -114,7 +144,8 @@ fun LocationsScreen(
 fun LocationScreenPreview() {
     val mockState = mutableStateOf(
         LocationsViewModel.LocationsScreenState(
-            currentLocation = "Wroclaw"
+            currentLocation = "Wroclaw",
+            isError = true
         )
     )
 

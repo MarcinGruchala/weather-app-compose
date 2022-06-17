@@ -23,22 +23,26 @@ class LocationsViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             repository.state.collect {
-                _state.value = LocationsScreenState(it.mainLocation)
+                _state.value = LocationsScreenState(it.mainLocation,it.apiError)
             }
         }
     }
 
     fun onLocationSearchButtonClicked(location: String) {
-        repository.setLocation(location = location)
+        viewModelScope.launch {
+            repository.setLocation(location = location)
+        }
     }
 
     data class LocationsScreenState(
-        val currentLocation: String
+        val currentLocation: String,
+        val isError: Boolean
     ) {
         companion object {
             fun empty(): LocationsScreenState =
                 LocationsScreenState(
-                    currentLocation = ""
+                    currentLocation = "",
+                    isError = false
                 )
         }
     }
