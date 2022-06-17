@@ -2,6 +2,7 @@ package com.weather.network
 
 import com.weather.network.model.current.CurrentWeatherResponse
 import com.weather.network.model.onecall.OneCallResponse
+import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -14,7 +15,7 @@ class NetworkManager @Inject constructor(
     suspend fun downloadCurrentWeather(
         location: String,
         units: String
-    ): CurrentWeatherResponse =
+    ): Response<CurrentWeatherResponse> =
         api
             .currentWeather(
                 city = location,
@@ -27,7 +28,7 @@ class NetworkManager @Inject constructor(
         lon: Double,
         exclude: String,
         units: String
-    ): OneCallResponse =
+    ): Response<OneCallResponse> =
         api
             .futureForecast(
                 lat = lat,

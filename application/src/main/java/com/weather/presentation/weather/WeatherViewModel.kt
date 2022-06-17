@@ -27,9 +27,11 @@ class WeatherViewModel @Inject constructor(
             locationRepository.state.collect { locationState ->
                 weatherRepository
                     .fetchWeatherForecast(locationState.mainLocation)
-                    .also {
-                        _state.value = stateFactory.createState(it)
-                    }
+            }
+        }
+        viewModelScope.launch {
+            weatherRepository.weatherForecast.collect {
+                _state.value = stateFactory.createState(it)
             }
         }
     }
