@@ -1,6 +1,6 @@
 package com.weather.presentation.weather
 
-import com.weather.domain.model.common.WeatherForecast
+import com.weather.domain.weather.model.common.WeatherForecast
 import com.weather.presentation.utils.DateTimeFormatter
 import com.weather.presentation.weather.daily.DailyListFactory
 import com.weather.presentation.weather.grid.GridForecastModel

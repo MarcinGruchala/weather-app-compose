@@ -1,4 +1,4 @@
-package com.weather.domain.model.onecall
+package com.weather.domain.weather.model.onecall
 
 import com.weather.network.model.onecall.RainDto
 

@@ -3,6 +3,7 @@ package com.weather.ui.theme
 import androidx.compose.ui.graphics.Color
 
 val White = Color(0xFFFFFFFF)
+val Onyx = Color(0xFF3D3D3D)
 val Black = Color(0xFF000000)
 
 val SkyBlue60 = Color(0xFF33bbff)

@@ -1,6 +1,6 @@
-package com.weather.domain.model.current
+package com.weather.domain.weather.model.current
 
-import com.weather.domain.model.common.Weather
+import com.weather.domain.weather.model.common.Weather
 import com.weather.network.model.current.CurrentWeatherResponse
 
 data class CurrentWeatherModel(
