@@ -8,12 +8,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.weather.presentation.locations.LocationsFragmentScreen
 import com.weather.presentation.weather.WeatherFragmentScreen
 import com.weather.ui.theme.WeatherTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
+@ExperimentalPermissionsApi
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,6 +31,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
+@ExperimentalPermissionsApi
 fun WeatherAppNavigation(controller: NavHostController) {
     NavHost(navController = controller, startDestination = "weather") {
         composable(route = "weather") { WeatherFragmentScreen(controller) }
