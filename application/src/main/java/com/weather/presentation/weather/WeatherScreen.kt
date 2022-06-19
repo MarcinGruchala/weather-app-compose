@@ -12,6 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.List
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,8 +20,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.weather.R
 import com.weather.presentation.weather.daily.DailyForecast
 import com.weather.presentation.weather.daily.DailyForecastModel
@@ -28,7 +31,19 @@ import com.weather.presentation.weather.grid.GridForecast
 import com.weather.presentation.weather.grid.GridForecastModel
 import com.weather.presentation.weather.hourly.HourlyForecast
 import com.weather.presentation.weather.hourly.HourlyForecastModel
+import com.weather.presentation.weather.location.HandleLocation
 import com.weather.ui.theme.WeatherTheme
+
+@Composable
+@ExperimentalPermissionsApi
+fun WeatherFragmentScreen(navController: NavHostController) {
+    val viewModel = hiltViewModel<WeatherViewModel>()
+    HandleLocation()
+    WeatherScreen(
+        navHostController = navController,
+        state = viewModel.state.collectAsState()
+    )
+}
 
 @Composable
 fun WeatherScreen(
