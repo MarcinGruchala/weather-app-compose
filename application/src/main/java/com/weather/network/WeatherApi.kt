@@ -15,6 +15,14 @@ interface WeatherApi {
         @Query("units") units: String
     ): Response<CurrentWeatherResponse>
 
+    @GET("weather")
+    suspend fun currentWeather(
+        @Query("lat") lat: Double,
+        @Query("lon") lon: Double,
+        @Query("appid") key: String,
+        @Query("units") units: String
+    ): Response<CurrentWeatherResponse>
+
     @GET("onecall")
     suspend fun futureForecast(
         @Query("lat") lat: Double,

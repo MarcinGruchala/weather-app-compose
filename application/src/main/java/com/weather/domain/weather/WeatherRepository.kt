@@ -24,7 +24,36 @@ class WeatherRepository @Inject constructor(
     val weatherForecast = _weatherForecast.consumeAsFlow()
 
     suspend fun fetchWeatherForecast(location: String) {
-        val currentWeatherResponse = networkManager.downloadCurrentWeather(location, UNITS)
+        val currentWeatherResponse =
+            networkManager.downloadCurrentWeather(location, UNITS)
+        if (currentWeatherResponse.isSuccessful) {
+            currentWeatherResponse.body()?.let { currentWeather ->
+                val futureWeather = networkManager.downloadFutureForecast(
+                    lat = currentWeather.coordinates.lat,
+                    lon = currentWeather.coordinates.lon,
+                    exclude = EXCLUDE,
+                    units = UNITS
+                )
+                if (futureWeather.isSuccessful) {
+                    futureWeather.body()?.let {
+                        _weatherForecast.send(
+                            WeatherForecast(
+                                currentWeather = CurrentWeatherModel.createFrom(currentWeather),
+                                futureForecast = OneCallModel.createFrom(it)
+                            )
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    suspend fun fetchWeatherForecast(
+        lat: Double,
+        lon: Double
+    ) {
+        val currentWeatherResponse =
+            networkManager.downloadCurrentWeather(lat, lon, UNITS)
         if (currentWeatherResponse.isSuccessful) {
             currentWeatherResponse.body()?.let { currentWeather ->
                 val futureWeather = networkManager.downloadFutureForecast(

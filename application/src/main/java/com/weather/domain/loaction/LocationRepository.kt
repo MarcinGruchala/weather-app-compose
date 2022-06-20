@@ -25,15 +25,27 @@ class LocationRepository @Inject constructor(
         )
     }
 
-    suspend fun setLocation(location: String) {
+    suspend fun checkLocation(location: String) {
         val response = networkManager
             .downloadCurrentWeather(location, "metric")
         if (response.isSuccessful) {
             response.body()?.let {
-                _state.value = LocationRepositoryState(location,false)
+                _state.value = LocationRepositoryState(this.state.value.mainLocation, false)
             }
         } else {
-            _state.value = LocationRepositoryState("",true)
+            _state.value = LocationRepositoryState(this.state.value.mainLocation, true)
+        }
+    }
+
+    suspend fun setLocation(lat: Double, lon: Double) {
+        val response = networkManager
+            .downloadCurrentWeather(lat, lon, "metric")
+        if (response.isSuccessful) {
+            response.body()?.let {
+                _state.value = LocationRepositoryState(it.name, false)
+            }
+        } else {
+            _state.value = LocationRepositoryState("", true)
         }
     }
 

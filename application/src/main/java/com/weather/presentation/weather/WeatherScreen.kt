@@ -38,7 +38,7 @@ import com.weather.ui.theme.WeatherTheme
 @ExperimentalPermissionsApi
 fun WeatherFragmentScreen(navController: NavHostController) {
     val viewModel = hiltViewModel<WeatherViewModel>()
-    HandleLocation()
+    HandleLocation(viewModel)
     WeatherScreen(
         navHostController = navController,
         state = viewModel.state.collectAsState()

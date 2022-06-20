@@ -30,7 +30,7 @@ class LocationsViewModel @Inject constructor(
 
     fun onLocationSearchButtonClicked(location: String) {
         viewModelScope.launch {
-            repository.setLocation(location = location)
+            repository.checkLocation(location = location)
         }
     }
 

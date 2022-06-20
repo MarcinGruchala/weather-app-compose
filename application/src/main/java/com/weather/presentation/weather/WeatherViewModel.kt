@@ -12,8 +12,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WeatherViewModel @Inject constructor(
-    locationRepository: LocationRepository,
-    weatherRepository: WeatherRepository,
+    private val locationRepository: LocationRepository,
+    private val weatherRepository: WeatherRepository,
     stateFactory: WeatherStateFactory
 ) : ViewModel() {
 
@@ -24,15 +24,21 @@ class WeatherViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            locationRepository.state.collect { locationState ->
-                weatherRepository
-                    .fetchWeatherForecast(locationState.mainLocation)
-            }
-        }
-        viewModelScope.launch {
             weatherRepository.weatherForecast.collect {
                 _state.value = stateFactory.createState(it)
             }
+        }
+    }
+
+    fun setCurrentLocation(lat: Double, lon: Double) {
+        viewModelScope.launch {
+            locationRepository.setLocation(lat, lon)
+        }
+    }
+
+    fun fetchWeatherForecast(lat: Double, lon: Double) {
+        viewModelScope.launch {
+            weatherRepository.fetchWeatherForecast(lat, lon)
         }
     }
 }

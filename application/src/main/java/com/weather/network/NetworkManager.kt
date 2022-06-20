@@ -23,6 +23,19 @@ class NetworkManager @Inject constructor(
                 units = units
             )
 
+    suspend fun downloadCurrentWeather(
+        lat: Double,
+        lon: Double,
+        units: String
+    ): Response<CurrentWeatherResponse> =
+        api
+            .currentWeather(
+                lat = lat,
+                lon = lon,
+                key = configuration.apiKey(),
+                units = units
+            )
+
     suspend fun downloadFutureForecast(
         lat: Double,
         lon: Double,
